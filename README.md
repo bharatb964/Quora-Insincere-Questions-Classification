@@ -24,3 +24,13 @@ from keras.preprocessing.text import Tokenizer
 tokenizer=Tokenizer(num_words=10000)
 ```
 #### LSTM model
+```
+model = Sequential()
+model.add(Embedding(10000, 60, input_length=50))
+model.add(Bidirectional(CuDNNLSTM(64, return_sequences=True)))
+model.add(GlobalMaxPool1D())
+model.add(Dense(16, activation="relu"))
+model.add(Dropout(0.1))
+model.add(Dense(1, activation='sigmoid'))
+```
+The Sequencial model is created using keras with Embeddings and LSTM layers. The Embedding layer takes the input shape of 50 and adds the embedding of length 60 (with vocublary size of 10000). Then LSTM layer is added with Bidirectional wrapper from keras. Bidirectional LSTM contains two networks, one for the forward direction and other for the backward direction.
